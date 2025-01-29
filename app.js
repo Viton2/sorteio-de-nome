@@ -53,9 +53,11 @@ function sortearAmigo() {
     // Atualiza a lista HTML de amigos
     adicionarAmigos();
 
+    listaAmigos.innerHTML = "";
+
     // Adiciona o amigo sorteado na lista de sorteados
     const novoNomeSorteado = document.createElement("li");
-    novoNomeSorteado.textContent = nomeSorteado;
+    novoNomeSorteado.textContent = `O amigo secreto sorteado é: ${nomeSorteado}`;
     listaSorteado.appendChild(novoNomeSorteado);
 }
 
