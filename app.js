@@ -1,63 +1,62 @@
 //O principal objetivo deste desafio é fortalecer suas habilidades em lógica de programação. Aqui você deverá desenvolver a lógica para resolver o problema.
 
+const inputNome = document.getElementById("amigo");
+const listaAmigos = document.getElementById("listaAmigos");
+const listaSorteado = document.getElementById("resultado");
 
-const nomeInput = document.getElementById("amigo");
 let listaNomes = [];
-let listaHTML = document.getElementById("listaAmigos");
-let resultado = document.getElementById("resultado");
 
-function agregarAmigos(){
-    let nome = nomeInput.value;
+function agregarAmigos() {
+    const nome = inputNome.value;
     if (nome === "") {
         alert("Por favor, insira um nome.");
         return;
     }
-    const itensLista = Array.from(listaHTML.children).map((item) => item.textContent);
-
-    if (itensLista.includes(nome)) {
+    if (listaNomes.includes(nome)) {
         alert("Este nome já foi adicionado.");
         return;
     }
-    nomeInput.value = "";
-    return nome;
+    listaNomes.push(nome);
+    inputNome.value = "";
+}
 
+function adicionarAmigos() {
+    // Limpa a lista HTML antes de adicionar novamente
+    listaAmigos.innerHTML = "";
+
+    // Adiciona cada nome do array à lista HTML
+    listaNomes.forEach((nome) => {
+        const novoItem = document.createElement("li");
+        novoItem.textContent = nome;
+        listaAmigos.appendChild(novoItem);
+    });
 }
 
 function adicionarAmigo() {
-    let nome = agregarAmigos();
-    console.log(nome);
-
-    // Cria um novo elemento <li> para adicionar o nome
-    const novoItem = document.createElement("li");
-    novoItem.textContent = nome;
-
-    // Adiciona o <li> na lista UL
-    listaHTML.appendChild(novoItem);
-
-    // Limpa o campo de input
-    console.log(listaHTML.innerHTML);
+    agregarAmigos();
+    adicionarAmigos();
 }
 
-
 function sortearAmigo() {
-    // Obtém todos os itens da lista de amigos
-    const itensLista = Array.from(listaHTML.children);
-
-    // Verifica se a lista está vazia
-    if (itensLista.length === 0) {
+    if (listaNomes.length === 0) {
         alert("A lista de amigos está vazia. Adicione nomes antes de sortear.");
         return;
     }
-
+    // Verifica se a lista de sorteados não está vazia e limpa
+    if (listaSorteado.children.length > 0) {
+        listaSorteado.innerHTML = "";
+    }
     // Seleciona um índice aleatório
-    const indiceSorteado = Math.floor(Math.random() * itensLista.length);
-    const amigoSorteado = itensLista[indiceSorteado];
+    const indiceSorteado = Math.floor(Math.random() * listaNomes.length);
+    const nomeSorteado = listaNomes[indiceSorteado];
 
-    // Remove o amigo sorteado da lista de amigos
-    listaHTML.removeChild(amigoSorteado);
+    // Atualiza a lista HTML de amigos
+    adicionarAmigos();
 
     // Adiciona o amigo sorteado na lista de sorteados
-    const novoItemSorteado = document.createElement("li");
-    novoItemSorteado.textContent = amigoSorteado.textContent;
-    resultado.appendChild(novoItemSorteado);
+    const novoNomeSorteado = document.createElement("li");
+    novoNomeSorteado.textContent = nomeSorteado;
+    listaSorteado.appendChild(novoNomeSorteado);
 }
+
+
